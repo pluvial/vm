@@ -10,3 +10,9 @@ xcuserdata/
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 /build/
+
+*.gz
+*.img
+*.iso
+initrd
+vmlinuz
