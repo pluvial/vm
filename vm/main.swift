@@ -35,6 +35,15 @@ consoleConfiguration.attachment = stdioAttachment
 
 configuration.serialPorts = [consoleConfiguration]
 
+let vda = try VZDiskImageStorageDeviceAttachment(
+  url: URL(fileURLWithPath: "vda.img"), readOnly: false)
+let vdc = try VZDiskImageStorageDeviceAttachment(
+  url: URL(fileURLWithPath: "vdc.iso"), readOnly: true)
+configuration.storageDevices = [
+  VZVirtioBlockDeviceConfiguration(attachment: vda),
+  VZVirtioBlockDeviceConfiguration(attachment: vdc),
+]
+
 // creates a linux bootloader with the given kernel and initial ramdisk
 let bootLoader = VZLinuxBootLoader(kernelURL: kernelURL)
 bootLoader.initialRamdiskURL = initialRamdiskURL
@@ -43,7 +52,9 @@ let kernelCommandLineArguments = [
   // use the first virtio console device as system console
   "console=hvc0",
   // stop in the initial ramdisk before attempting to transition to the root file system
-  "rd.break=initqueue",
+  // "rd.break=initqueue",
+  // boot from /dev/vda
+  "root=/dev/vda",
 ]
 
 bootLoader.commandLine = kernelCommandLineArguments.joined(separator: " ")
