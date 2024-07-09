@@ -15,6 +15,11 @@ if [ ! -f vda.img ]; then
   exit 1
 fi
 
+if [ ! -f vdb.img ]; then
+  echo "no vdb.img"
+  exit 1
+fi
+
 if [ ! -f vdc.iso ]; then
   echo "no vdc.iso"
   exit 1

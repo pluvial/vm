@@ -22,6 +22,10 @@ if [ ! -f vda.img ]; then
   truncate -s 64G vda.img
 fi
 
+if [ ! -f vdb.img ]; then
+  truncate -s 16G vdb.img
+fi
+
 if [ ! -f vdc.iso ]; then
   hdiutil makehybrid -o vdc cidata -iso -joliet
 fi

@@ -13,6 +13,10 @@ let configuration = VZVirtualMachineConfiguration()
 configuration.cpuCount = 2
 configuration.memorySize = 2 * 1024 * 1024 * 1024  // 2 GiB
 
+let network = VZVirtioNetworkDeviceConfiguration()
+network.attachment = VZNATNetworkDeviceAttachment()
+configuration.networkDevices = [network]
+
 // creates a serial configuration object for a virtio console device,
 // and attaches it to stdin and stdout
 let consoleConfiguration = VZVirtioConsoleDeviceSerialPortConfiguration()
@@ -37,12 +41,17 @@ configuration.serialPorts = [consoleConfiguration]
 
 let vda = try VZDiskImageStorageDeviceAttachment(
   url: URL(fileURLWithPath: "vda.img"), readOnly: false)
+let vdb = try VZDiskImageStorageDeviceAttachment(
+  url: URL(fileURLWithPath: "vdb.img"), readOnly: false)
 let vdc = try VZDiskImageStorageDeviceAttachment(
   url: URL(fileURLWithPath: "vdc.iso"), readOnly: true)
 configuration.storageDevices = [
   VZVirtioBlockDeviceConfiguration(attachment: vda),
+  VZVirtioBlockDeviceConfiguration(attachment: vdb),
   VZVirtioBlockDeviceConfiguration(attachment: vdc),
 ]
+
+configuration.entropyDevices = [VZVirtioEntropyDeviceConfiguration()]
 
 // creates a linux bootloader with the given kernel and initial ramdisk
 let bootLoader = VZLinuxBootLoader(kernelURL: kernelURL)
