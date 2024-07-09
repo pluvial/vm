@@ -1,0 +1,15 @@
+#!/bin/sh
+hostname alpine
+ip addr add 127.0.0.1/8 dev lo
+ip link set lo up
+ip link set eth0 up
+mkdir /dev/pts
+mkdir /dev/shm
+mount -a
+ln -s /proc/self/fd/0 /dev/stdin
+mount -o rw,remount / | logger -t mount
+/sbin/syslogd
+/sbin/klogd
+/sbin/udhcpc -p /run/udhcpc.pid -C -S 2>/dev/null
+/usr/sbin/ntpd -p pool.ntp.org
+[ -f /usr/sbin/dropbear ] && /usr/sbin/dropbear -R -B
