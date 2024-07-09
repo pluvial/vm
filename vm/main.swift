@@ -53,15 +53,24 @@ configuration.storageDevices = [
 
 configuration.entropyDevices = [VZVirtioEntropyDeviceConfiguration()]
 
-let cwd = VZVirtioFileSystemDeviceConfiguration(tag: "cwd")
-cwd.share = VZSingleDirectoryShare(
-  directory: VZSharedDirectory(
-    url: URL(fileURLWithPath: FileManager.default.currentDirectoryPath), readOnly: false))
-let home = VZVirtioFileSystemDeviceConfiguration(tag: "home")
-home.share = VZSingleDirectoryShare(
-  directory: VZSharedDirectory(
-    url: FileManager.default.homeDirectoryForCurrentUser, readOnly: false))
-configuration.directorySharingDevices = [cwd, home]
+// let cwd = VZVirtioFileSystemDeviceConfiguration(tag: "cwd")
+// cwd.share = VZSingleDirectoryShare(
+//   directory: VZSharedDirectory(
+//     url: URL(fileURLWithPath: FileManager.default.currentDirectoryPath), readOnly: false))
+// let home = VZVirtioFileSystemDeviceConfiguration(tag: "home")
+// home.share = VZSingleDirectoryShare(
+//   directory: VZSharedDirectory(
+//     url: FileManager.default.homeDirectoryForCurrentUser, readOnly: false))
+// configuration.directorySharingDevices = [cwd, home]
+
+let host = VZVirtioFileSystemDeviceConfiguration(tag: "host")
+host.share = VZMultipleDirectoryShare(directories: [
+  "cwd": VZSharedDirectory(
+    url: URL(fileURLWithPath: FileManager.default.currentDirectoryPath), readOnly: false),
+  "home": VZSharedDirectory(
+    url: FileManager.default.homeDirectoryForCurrentUser, readOnly: false),
+])
+configuration.directorySharingDevices = [host]
 
 // creates a linux bootloader with the given kernel and initial ramdisk
 let bootLoader = VZLinuxBootLoader(kernelURL: kernelURL)
