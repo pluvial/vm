@@ -1,28 +1,24 @@
 #!/bin/sh
 
-if [ ! -f vmlinuz ]; then
-  echo "no vmlinuz"
-  exit 1
-fi
+set -ex
 
-if [ ! -f initrd ]; then
-  echo "no initrd"
-  exit 1
-fi
+script=$(readlink -f "$0")
+dir=$(dirname "$script")
 
-if [ ! -f vda.img ]; then
-  echo "no vda.img"
-  exit 1
-fi
+check() {
+  if [ ! -f "$1" ]; then
+    echo "no $1"
+    popd
+    exit 1
+  fi
+}
 
-if [ ! -f vdb.img ]; then
-  echo "no vdb.img"
-  exit 1
-fi
+pushd $dir >/dev/null
+check vmlinuz
+check initrd
+check vda.img
+check vdb.img
+check vdc.iso
+popd >/dev/null
 
-if [ ! -f vdc.iso ]; then
-  echo "no vdc.iso"
-  exit 1
-fi
-
-../build/Release/vm vmlinuz initrd
+$dir/../build/Release/vm $dir

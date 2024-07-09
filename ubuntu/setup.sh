@@ -1,5 +1,12 @@
 #!/bin/sh
 
+set -ex
+
+script=$(readlink -f "$0")
+dir=$(dirname "$script")
+
+pushd $dir >/dev/null
+
 if [ ! -f vmlinuz ]; then
   if [ ! -f vmlinuz.gz ]; then
     wget -O vmlinuz.gz https://cloud-images.ubuntu.com/noble/current/unpacked/noble-server-cloudimg-arm64-vmlinuz-generic
@@ -29,3 +36,5 @@ fi
 if [ ! -f vdc.iso ]; then
   hdiutil makehybrid -o vdc cidata -iso -joliet
 fi
+
+popd >/dev/null

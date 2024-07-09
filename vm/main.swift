@@ -1,12 +1,13 @@
 import Virtualization
 
-// parse the command line
-guard CommandLine.argc == 3 else {
-  printUsageAndExit()
-}
-
-let kernelURL = URL(fileURLWithPath: CommandLine.arguments[1], isDirectory: false)
-let initialRamdiskURL = URL(fileURLWithPath: CommandLine.arguments[2], isDirectory: false)
+let dir = URL(fileURLWithPath: CommandLine.arguments[1], isDirectory: true)
+// let kernelURL = URL(fileURLWithPath: CommandLine.arguments[1], isDirectory: false)
+// let initialRamdiskURL = URL(fileURLWithPath: CommandLine.arguments[2], isDirectory: false)
+let kernelURL = dir.appendingPathComponent("vmlinuz")
+let initialRamdiskURL = dir.appendingPathComponent("initrd")
+let vdaURL = dir.appendingPathComponent("vda.img")
+let vdbURL = dir.appendingPathComponent("vdb.img")
+let vdcURL = dir.appendingPathComponent("vdc.iso")
 
 // create the virtual machine configuration
 let configuration = VZVirtualMachineConfiguration()
@@ -39,12 +40,9 @@ consoleConfiguration.attachment = stdioAttachment
 
 configuration.serialPorts = [consoleConfiguration]
 
-let vda = try VZDiskImageStorageDeviceAttachment(
-  url: URL(fileURLWithPath: "vda.img"), readOnly: false)
-let vdb = try VZDiskImageStorageDeviceAttachment(
-  url: URL(fileURLWithPath: "vdb.img"), readOnly: false)
-let vdc = try VZDiskImageStorageDeviceAttachment(
-  url: URL(fileURLWithPath: "vdc.iso"), readOnly: true)
+let vda = try VZDiskImageStorageDeviceAttachment(url: vdaURL, readOnly: false)
+let vdb = try VZDiskImageStorageDeviceAttachment(url: vdbURL, readOnly: false)
+let vdc = try VZDiskImageStorageDeviceAttachment(url: vdcURL, readOnly: true)
 configuration.storageDevices = [
   VZVirtioBlockDeviceConfiguration(attachment: vda),
   VZVirtioBlockDeviceConfiguration(attachment: vdb),
@@ -120,9 +118,4 @@ extension Delegate: VZVirtualMachineDelegate {
     print("The guest shut down. Exiting.")
     exit(EXIT_SUCCESS)
   }
-}
-
-func printUsageAndExit() -> Never {
-  print("Usage: \(CommandLine.arguments[0]) <kernel-path> <initial-ramdisk-path>")
-  exit(EX_USAGE)
 }
