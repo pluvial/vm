@@ -11,6 +11,7 @@ let vdcURL = dir.appendingPathComponent("vdc.iso")
 
 let hasInitialRamdisk = FileManager.default.fileExists(
   atPath: initialRamdiskURL.path(percentEncoded: false))
+let hasVdb = FileManager.default.fileExists(atPath: vdbURL.path(percentEncoded: false))
 let hasVdc = FileManager.default.fileExists(atPath: vdcURL.path(percentEncoded: false))
 
 // create the virtual machine configuration
@@ -45,11 +46,11 @@ consoleConfiguration.attachment = stdioAttachment
 configuration.serialPorts = [consoleConfiguration]
 
 let vda = try VZDiskImageStorageDeviceAttachment(url: vdaURL, readOnly: false)
-let vdb = try VZDiskImageStorageDeviceAttachment(url: vdbURL, readOnly: false)
-configuration.storageDevices = [
-  VZVirtioBlockDeviceConfiguration(attachment: vda),
-  VZVirtioBlockDeviceConfiguration(attachment: vdb),
-]
+configuration.storageDevices = [ VZVirtioBlockDeviceConfiguration(attachment: vda) ]
+if hasVdb {
+  let vdb = try VZDiskImageStorageDeviceAttachment(url: vdbURL, readOnly: false)
+  configuration.storageDevices.append(VZVirtioBlockDeviceConfiguration(attachment: vdb))
+}
 if hasVdc {
   let vdc = try VZDiskImageStorageDeviceAttachment(url: vdcURL, readOnly: true)
   configuration.storageDevices.append(VZVirtioBlockDeviceConfiguration(attachment: vdc))

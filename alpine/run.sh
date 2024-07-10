@@ -5,19 +5,20 @@ set -e
 
 script=$(readlink -f "$0")
 dir=$(dirname "$script")
+cwd=$(pwd)
 
 check() {
   if [ ! -f "$1" ]; then
     echo "no $1"
-    popd
-    exit 1
+    cd $cwd
+    return 1
   fi
 }
 
-pushd $dir >/dev/null
+cd $dir
 check vmlinuz
 check vda.img
-check vdb.img
-popd >/dev/null
+check vdb.img || echo "no podman support"
 
+cd $cwd
 $dir/../build/Release/vm $dir
