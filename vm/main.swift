@@ -9,6 +9,10 @@ let vdaURL = dir.appendingPathComponent("vda.img")
 let vdbURL = dir.appendingPathComponent("vdb.img")
 let vdcURL = dir.appendingPathComponent("vdc.iso")
 
+let hasInitialRamdisk = FileManager.default.fileExists(
+  atPath: initialRamdiskURL.path(percentEncoded: false))
+let hasVdc = FileManager.default.fileExists(atPath: vdcURL.path(percentEncoded: false))
+
 // create the virtual machine configuration
 let configuration = VZVirtualMachineConfiguration()
 configuration.cpuCount = 2
@@ -42,12 +46,14 @@ configuration.serialPorts = [consoleConfiguration]
 
 let vda = try VZDiskImageStorageDeviceAttachment(url: vdaURL, readOnly: false)
 let vdb = try VZDiskImageStorageDeviceAttachment(url: vdbURL, readOnly: false)
-let vdc = try VZDiskImageStorageDeviceAttachment(url: vdcURL, readOnly: true)
 configuration.storageDevices = [
   VZVirtioBlockDeviceConfiguration(attachment: vda),
   VZVirtioBlockDeviceConfiguration(attachment: vdb),
-  VZVirtioBlockDeviceConfiguration(attachment: vdc),
 ]
+if hasVdc {
+  let vdc = try VZDiskImageStorageDeviceAttachment(url: vdcURL, readOnly: true)
+  configuration.storageDevices.append(VZVirtioBlockDeviceConfiguration(attachment: vdc))
+}
 
 configuration.entropyDevices = [VZVirtioEntropyDeviceConfiguration()]
 
@@ -72,7 +78,9 @@ configuration.directorySharingDevices = [host]
 
 // creates a linux bootloader with the given kernel and initial ramdisk
 let bootLoader = VZLinuxBootLoader(kernelURL: kernelURL)
-bootLoader.initialRamdiskURL = initialRamdiskURL
+if hasInitialRamdisk {
+  bootLoader.initialRamdiskURL = initialRamdiskURL
+}
 
 let kernelCommandLineArguments = [
   // use the first virtio console device as system console
