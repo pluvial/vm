@@ -73,7 +73,7 @@ sudo mount -t virtiofs host host
 # host /mnt/host virtiofs defaults 0 0
 ```
 
-## Build Alpine
+## Setup Alpine VM
 
 Inside Ubuntu VM:
 
@@ -81,6 +81,81 @@ Inside Ubuntu VM:
 cd host/cwd/alpine
 ./linux.sh
 ./image.sh
+```
+
+Outside VM:
+
+```sh
+alpine/setup.sh
+```
+
+```sh
+tree alpine
+alpine
+├── alpine-minirootfs.tar.gz
+├── etc
+│   ├── fstab
+│   ├── group
+│   ├── hosts
+│   ├── init.d
+│   │   ├── rcK
+│   │   └── rcS
+│   ├── inittab
+│   └── passwd
+├── image.sh
+├── linux.config
+├── linux.sh
+├── linux.tar.xz
+├── linux.version
+├── mnt
+├── root
+│   ├── build.sh
+│   ├── setup-podman.sh
+│   └── setup-vdb.sh
+├── run.sh
+├── setup.sh
+├── usr
+│   └── share
+│       └── udhcpc
+│           └── default.script
+├── vda.img
+├── vdb.img
+└── vmlinuz
+
+8 directories, 22 files
+```
+
+## Run Alpine VM
+
+```sh
+alpine/run.sh
+```
+
+### Setup Podman
+
+Inside Alpine VM:
+
+```sh
+./setup-vdb.sh
+./setup-podman.sh
+```
+
+Test with:
+
+```sh
+podman run --rm -it alpine
+```
+
+### Build Linux in Podman
+
+```sh
+./build.sh
+```
+
+Creates `~/build/vmlinuz`, can be copied to host with:
+
+```sh
+cp build/vmlinuz /mnt/host/cwd/
 ```
 
 ## Cleaning
