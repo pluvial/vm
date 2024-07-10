@@ -67,8 +67,8 @@ ubuntu/run.sh
 Mount host shared directories:
 
 ```sh
-mkdir host
-sudo mount -t virtiofs host host
+sudo mkdir /mnt/host
+sudo mount -t virtiofs host /mnt/host
 # or add to /etc/fstab :
 # host /mnt/host virtiofs defaults 0 0
 ```
@@ -78,14 +78,16 @@ sudo mount -t virtiofs host host
 Inside Ubuntu VM:
 
 ```sh
-cd host/cwd/alpine
-./linux.sh
-./image.sh
+cd /mnt/host/cwd/alpine
+sudo ./build.sh
 ```
+
+Creates `/mnt/host/cwd/vm-build`
 
 Outside VM:
 
 ```sh
+mv vm-build/* alpine
 alpine/setup.sh
 ```
 
