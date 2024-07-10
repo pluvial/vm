@@ -8,11 +8,12 @@ let initialRamdiskURL = dir.appendingPathComponent("initrd")
 let vdaURL = dir.appendingPathComponent("vda.img")
 let vdbURL = dir.appendingPathComponent("vdb.img")
 let vdcURL = dir.appendingPathComponent("vdc.iso")
+let macAddressURL = dir.appendingPathComponent(".virt.mac")
 
 let hasInitialRamdisk = FileManager.default.fileExists(
   atPath: initialRamdiskURL.path(percentEncoded: false))
-let hasVdb = FileManager.default.fileExists(atPath: vdbURL.path(percentEncoded: false))
-let hasVdc = FileManager.default.fileExists(atPath: vdcURL.path(percentEncoded: false))
+let hasVdb = FileManager.default.fileExists(atPath: vdbURL.path)
+let hasVdc = FileManager.default.fileExists(atPath: vdcURL.path)
 
 // create the virtual machine configuration
 let configuration = VZVirtualMachineConfiguration()
@@ -20,6 +21,20 @@ configuration.cpuCount = 2
 configuration.memorySize = 2 * 1024 * 1024 * 1024  // 2 GiB
 
 let network = VZVirtioNetworkDeviceConfiguration()
+if let macAddressString = try? String(contentsOfFile: macAddressURL.path, encoding: .utf8),
+  let macAddress = VZMACAddress(
+    string: macAddressString.trimmingCharacters(in: .whitespacesAndNewlines))
+{
+  network.macAddress = macAddress
+} else {
+  let macAddressString = network.macAddress.string
+  print("Using new MAC Address \(macAddressString)")
+  do {
+    try macAddressString.write(toFile: macAddressURL.path, atomically: false, encoding: .utf8)
+  } catch {
+    fatalError("Virtual Machine Config Error: \(error)")
+  }
+}
 network.attachment = VZNATNetworkDeviceAttachment()
 configuration.networkDevices = [network]
 
@@ -46,7 +61,7 @@ consoleConfiguration.attachment = stdioAttachment
 configuration.serialPorts = [consoleConfiguration]
 
 let vda = try VZDiskImageStorageDeviceAttachment(url: vdaURL, readOnly: false)
-configuration.storageDevices = [ VZVirtioBlockDeviceConfiguration(attachment: vda) ]
+configuration.storageDevices = [VZVirtioBlockDeviceConfiguration(attachment: vda)]
 if hasVdb {
   let vdb = try VZDiskImageStorageDeviceAttachment(url: vdbURL, readOnly: false)
   configuration.storageDevices.append(VZVirtioBlockDeviceConfiguration(attachment: vdb))

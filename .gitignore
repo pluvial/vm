@@ -18,4 +18,4 @@ xcuserdata/
 initrd
 vmlinuz
 
-linux/
+.virt.mac
