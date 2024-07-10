@@ -29,7 +29,7 @@ let outputFileHandle = FileHandle.standardOutput
 var attributes = termios()
 tcgetattr(inputFileHandle.fileDescriptor, &attributes)
 attributes.c_iflag &= ~tcflag_t(ICRNL)
-attributes.c_lflag &= ~tcflag_t(ICANON | ECHO)
+attributes.c_lflag &= ~tcflag_t(ECHO | ICANON | ISIG)
 tcsetattr(inputFileHandle.fileDescriptor, TCSANOW, &attributes)
 
 let stdioAttachment = VZFileHandleSerialPortAttachment(
