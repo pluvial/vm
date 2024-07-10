@@ -1,6 +1,7 @@
-#!/bin/sh
+#!/usr/bin/bash
 
-set -ex
+set -e
+set -x
 
 if [ ! -d mnt ]; then
   sudo apt update

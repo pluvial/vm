@@ -1,6 +1,7 @@
-#!/bin/sh
+#!/usr/bin/bash
 
-set -ex
+set -e
+set -x
 
 if [ ! -f alpine-minirootfs.tar.gz ]; then
   wget -O alpine-minirootfs.tar.gz https://dl-cdn.alpinelinux.org/alpine/v3.20/releases/aarch64/alpine-minirootfs-3.20.1-aarch64.tar.gz

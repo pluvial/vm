@@ -1,4 +1,8 @@
 #!/bin/sh
+
+set -e
+set -x
+
 apk add e2fsprogs
 mkfs.ext4 /dev/vdb
 mkdir /mnt/vdb

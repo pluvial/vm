@@ -1,4 +1,8 @@
 #!/bin/sh
+
+set -e
+set -x
+
 if [ ! -f /usr/bin/podman ]; then
   mkdir /mnt/vdb/containers
   ln -s /mnt/vdb/containers /var/lib/containers

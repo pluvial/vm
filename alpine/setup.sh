@@ -1,6 +1,7 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-set -ex
+set -e
+set -x
 
 script=$(readlink -f "$0")
 dir=$(dirname "$script")

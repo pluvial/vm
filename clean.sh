@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 rm -f */vda.img */vdb.img */vdc.iso
 if [ "$1" = "--all" ]; then
