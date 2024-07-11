@@ -75,7 +75,7 @@ sudo mount -t virtiofs host /mnt/host
 
 ## Setup Alpine VM
 
-Inside Ubuntu VM:
+In Ubuntu VM:
 
 ```sh
 cd /mnt/host/cwd/alpine
@@ -84,7 +84,7 @@ sudo ./build.sh
 
 Creates `/mnt/host/cwd/vm-build`
 
-Outside VM:
+In host:
 
 ```sh
 mv vm-build/* alpine
@@ -133,9 +133,23 @@ alpine
 alpine/run.sh
 ```
 
+### SSH into VM
+
+In VM:
+
+```sh
+apk add dropbear && reboot
+```
+
+In host:
+
+```sh
+alpine/ssh.sh
+```
+
 ### Setup Podman
 
-Inside Alpine VM:
+In VM:
 
 ```sh
 ./setup-vdb.sh

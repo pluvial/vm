@@ -23,16 +23,11 @@ configuration.memorySize = 2 * 1024 * 1024 * 1024  // 2 GiB
 let network = VZVirtioNetworkDeviceConfiguration()
 if let macAddressString = try? String(contentsOfFile: macAddressURL.path, encoding: .utf8),
   let macAddress = VZMACAddress(
-    // add leading zeros to components to match expected format
-    string: macAddressString.trimmingCharacters(in: .whitespacesAndNewlines)
-      .split(separator: ":").map { $0.count == 1 ? "0\($0)" : String($0) }.joined(separator: ":"))
+    string: macAddressString.trimmingCharacters(in: .whitespacesAndNewlines))
 {
   network.macAddress = macAddress
 } else {
-  // remove leading zeros from components to match ndp's format
-  let macAddressString = network.macAddress.string.split(separator: ":").map {
-    String($0.dropFirst(1))
-  }.joined(separator: ":")
+  let macAddressString = network.macAddress.string
   print("Using new MAC Address \(macAddressString)")
   do {
     try macAddressString.write(toFile: macAddressURL.path, atomically: false, encoding: .utf8)
