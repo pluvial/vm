@@ -28,6 +28,7 @@ sudo cp ../etc/fstab etc/fstab
 sudo cp -Tr ../etc/init.d etc/init.d
 sudo mkdir etc/dropbear mnt/host
 sudo cp -Tr ../root root
+sudo cp ../etc/apk/repositories etc/apk/repositories
 sudo cp ../usr/share/udhcpc/default.script usr/share/udhcpc/default.script
 sudo rm -rf lib/sysctl.d
 sudo rm -rf media opt srv
