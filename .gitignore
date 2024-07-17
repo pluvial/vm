@@ -1,13 +1,20 @@
+# Finder
+.DS_Store
+
+# Xcode - User files
 xcuserdata/
 
-*.xcodeproj/*
-!*.xcodeproj/project.pbxproj
-!*.xcodeproj/xcshareddata/
-!*.xcodeproj/project.xcworkspace/
-!*.xcworkspace/contents.xcworkspacedata
+**/*.xcodeproj/project.xcworkspace/*
+!**/*.xcodeproj/project.xcworkspace/xcshareddata
 
-/*.gcno
-**/xcshareddata/WorkspaceSettings.xcsettings
+**/*.xcodeproj/project.xcworkspace/xcshareddata/*
+!**/*.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings
+
+**/*.playground/playground.xcworkspace/*
+!**/*.playground/playground.xcworkspace/xcshareddata
+
+**/*.playground/playground.xcworkspace/xcshareddata/*
+!**/*.playground/playground.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings
 
 /build/
 
