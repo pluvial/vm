@@ -5,7 +5,9 @@ set -x
 
 cwd=$(pwd)
 
-doas apk add git
+doas apk add ccache git
+echo 'export PATH="/usr/lib/ccache/bin:$PATH"' >>~/.profile
+. ~/.profile
 
 # neovim build deps
 doas apk add build-base cmake coreutils curl unzip gettext-tiny-dev
@@ -30,9 +32,10 @@ sh autogen.sh
 doas make install
 cd ..
 
-doas apk add rustup
+doas apk add rustup sccache
 rustup-init -y
-. ~/.cargo/env
+echo 'RUSTC_WRAPPER=/usr/bin/sccache' >>~/.profile
+. ~/.profile
 
 cargo install fd-find ripgrep
 
