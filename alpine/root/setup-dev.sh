@@ -74,4 +74,10 @@ cd zig
 $ZIG_PREFIX/zig build -p stage3 --search-prefix $LLVM_PREFIX --zig-lib-dir lib -Dstatic-llvm
 cd ..
 
+doas apk add alpine-sdk
+# git clone git://git.alpinelinux.org/abuild
+git clone --depth 1 https://git.alpinelinux.org/abuild
+# git clone git://git.alpinelinux.org/aports
+git clone --depth 1 https://git.alpinelinux.org/aports
+
 doas apk add docs texinfo
