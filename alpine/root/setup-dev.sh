@@ -52,4 +52,26 @@ doas apk add go
 
 go install github.com/dundee/gdu/v5/cmd/gdu@latest
 
+doas apk add samurai # ninja alternative
+
+arch=native
+os=linux
+abi=musl
+cpu=native
+target=$arch-$os-$abi
+
+git clone --depth 1 https://github.com/ziglang/zig-bootstrap
+cd zig-bootstrap
+zig_bootstrap_dir=$(pwd)
+CMAKE_GENERATOR=Ninja ./build $target $cpu
+cd ..
+
+export ZIG_PREFIX=$zig_bootstrap_dir/out/zig-$target-$cpu
+export LLVM_PREFIX=$zig_bootstrap_dir/out/$target-$cpu
+
+git clone --depth 1 https://github.com/ziglang/zig
+cd zig
+$ZIG_PREFIX/zig build -p stage3 --search-prefix $LLVM_PREFIX --zig-lib-dir lib -Dstatic-llvm
+cd ..
+
 doas apk add docs texinfo

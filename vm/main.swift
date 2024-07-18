@@ -17,8 +17,8 @@ let hasVdc = FileManager.default.fileExists(atPath: vdcURL.path)
 
 // create the virtual machine configuration
 let configuration = VZVirtualMachineConfiguration()
-configuration.cpuCount = 2
-configuration.memorySize = 2 * 1024 * 1024 * 1024  // 2 GiB
+configuration.cpuCount = 4
+configuration.memorySize = 8 * 1024 * 1024 * 1024  // 8 GiB
 
 let network = VZVirtioNetworkDeviceConfiguration()
 if let macAddressString = try? String(contentsOfFile: macAddressURL.path, encoding: .utf8),
