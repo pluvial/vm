@@ -3,11 +3,14 @@
 set -e
 set -x
 
+cwd=$(pwd)
+
 doas apk add git
 
 # neovim build deps
 doas apk add build-base cmake coreutils curl unzip gettext-tiny-dev
 
+trap "cd $cwd" EXIT
 mkdir -p ~/.local/src
 cd ~/.local/src
 
@@ -18,7 +21,7 @@ doas make install
 cd ..
 
 # tmux build deps
-doas apk add automake bison libevent-dev ncurses-dev
+doas apk add autoconf automake bison libevent-dev ncurses-dev
 
 git clone --depth 1 https://github.com/tmux/tmux
 cd tmux
@@ -29,9 +32,9 @@ cd ..
 
 doas apk add rustup
 rustup-init -y
-. .cargo/env
+. ~/.cargo/env
 
-cargo install ripgrep
+cargo install fd-find ripgrep
 
 git clone --depth 1 https://github.com/fish-shell/fish-shell
 cd fish-shell
@@ -40,6 +43,7 @@ cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
 make
 doas make install
+cd ../..
 
 doas apk add go
 

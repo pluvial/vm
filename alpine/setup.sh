@@ -3,23 +3,20 @@
 set -e
 set -x
 
+cwd=$(pwd)
 script=$(readlink -f "$0")
 dir=$(dirname "$script")
 
-pushd $dir >/dev/null
+cd $dir
+trap "cd $cwd" EXIT
 
-if [ ! -f vmlinuz ]; then
-  echo "no vmlinuz"
-  exit 1
-fi
+check() {
+  if [ ! -f "$1" ]; then
+    echo "no $1"
+    return 1
+  fi
+}
 
-if [ ! -f vda.img ]; then
-  echo "no vda.img"
-  exit 1
-fi
-
-if [ ! -f vdb.img ]; then
-  truncate -s 16G vdb.img
-fi
-
-popd >/dev/null
+check vmlinuz
+check vda.img
+check vdb.img || echo "creating 16G vdb.img" && truncate -s 16G vdb.img

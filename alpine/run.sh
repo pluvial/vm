@@ -3,19 +3,20 @@
 set -e
 # set -x
 
+cwd=$(pwd)
 script=$(readlink -f "$0")
 dir=$(dirname "$script")
-cwd=$(pwd)
+
+cd $dir
+trap "cd $cwd" EXIT
 
 check() {
   if [ ! -f "$1" ]; then
     echo "no $1"
-    cd $cwd
     return 1
   fi
 }
 
-cd $dir
 check vmlinuz
 check vda.img
 check vdb.img || echo "no podman support"

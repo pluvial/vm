@@ -8,14 +8,15 @@ dir=$(dirname "$script")
 
 if [ "$1" = "--root" ]; then
   user=root
+  shift # filter out --root
+  args="$@"
 else
   user=alpine
+  args="$@"
 fi
 
-# remove leading zeros from mac address components
-mac=$(cat $dir/.virt.mac | sed 's/^0//g; s/:0/:/g')
-ip=$(ndp -an | grep $mac | awk '{print $1}')
+ip=$($dir/ip.sh)
 
-cmd="ssh $user@$ip"
-echo $cmd
-eval $cmd
+cmd="ssh $user@$ip $args"
+echo "$cmd"
+eval "$cmd"
