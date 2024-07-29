@@ -13,4 +13,11 @@ trap "cd $cwd" EXIT
 
 setup/cache.sh
 setup/go.sh
+setup/node.sh
 setup/rust.sh
+
+setup/bun.sh
+setup/deno.sh
+setup/zig.sh
+
+# setup/brew.sh
