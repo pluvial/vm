@@ -12,6 +12,7 @@ trap "cd $cwd" EXIT
 build/src.sh
 build/doc.sh
 build/fish.sh
+build/jq.sh
 build/janet.sh
 build/nvim.sh
 build/tmux.sh

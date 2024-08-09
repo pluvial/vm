@@ -7,7 +7,7 @@ cwd=$(pwd)
 cd ~/.local/src/fish-shell
 trap "cd $cwd" EXIT
 
-mkdir build local
+mkdir -p build local
 prefix="$PWD/local"
 cd build
 

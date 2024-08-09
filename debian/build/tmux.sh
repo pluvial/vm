@@ -9,7 +9,7 @@ trap "cd $cwd" EXIT
 
 sudo apt-get install autoconf automake bison libevent-dev libncurses-dev pkgconf
 
-mkdir local
+mkdir -p local
 prefix="$PWD/local"
 
 sh autogen.sh

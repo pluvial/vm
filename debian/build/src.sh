@@ -14,6 +14,7 @@ clone() {
 
 clone fish-shell fish-shell
 clone janet-lang janet
+clone jqlang jq
 clone neovim neovim
 clone tmux tmux
 clone ziglang zig
