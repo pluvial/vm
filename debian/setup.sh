@@ -21,3 +21,5 @@ setup/deno.sh
 setup/zig.sh
 
 # setup/brew.sh
+
+sudo apt install btop hcloud-cli httpie jq psmisc qemu-system
