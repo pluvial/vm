@@ -19,3 +19,5 @@ clone neovim neovim
 clone tmux tmux
 clone ziglang zig
 clone ziglang zig-bootstrap
+
+git clone https://luajit.org/git/luajit.git
