@@ -21,5 +21,9 @@ setup/deno.sh
 setup/zig.sh
 
 # setup/brew.sh
+# setup/caddy.sh
+# setup/code-server.sh
+# setup/docker.sh
+# setup/podman.sh
 
 sudo apt install btop hcloud-cli httpie jq psmisc qemu-system
