@@ -34,3 +34,6 @@ wget -O $file $url
 chmod +x $file
 
 ./$file
+
+sudo apt-get install uidmap
+dockerd-rootless-setuptool.sh install
