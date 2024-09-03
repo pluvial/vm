@@ -25,5 +25,6 @@ setup/zig.sh
 # setup/code-server.sh
 # setup/docker.sh
 # setup/podman.sh
+# setup/tailscale.sh
 
 sudo apt install btop hcloud-cli httpie jq psmisc qemu-system
