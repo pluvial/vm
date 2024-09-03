@@ -17,6 +17,7 @@ build/jq.sh
 build/janet.sh
 build/lua.sh
 build/luajit.sh
+build/nginx.sh
 build/nvim.sh
 build/openresty.sh
 build/tmux.sh

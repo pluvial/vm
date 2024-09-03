@@ -16,6 +16,7 @@ clone fish-shell fish-shell
 clone janet-lang janet
 clone jqlang jq
 clone neovim neovim
+clone nginx nginx
 clone tmux tmux
 clone ziglang zig
 clone ziglang zig-bootstrap
