@@ -18,6 +18,7 @@ build/janet.sh
 build/lua.sh
 build/luajit.sh
 build/nvim.sh
+build/openresty.sh
 build/tmux.sh
 build/zig.sh
 

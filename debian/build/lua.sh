@@ -12,7 +12,6 @@ cd ~/.local/cache
 trap "cd $cwd" EXIT
 
 wget $url
-chmod +x $file
 
 mkdir -p ~/.local/src
 cd ~/.local/src
