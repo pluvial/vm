@@ -6,9 +6,7 @@ let dir = URL(fileURLWithPath: CommandLine.arguments[1], isDirectory: true)
 let kernelURL = dir.appendingPathComponent("vmlinuz")
 let initialRamdiskURL = dir.appendingPathComponent("initrd")
 let efiVariableStoreURL = dir.appendingPathComponent("NVRAM")
-let efiVariableStorePath = efiVariableStoreURL.path
 let machineIdentifierURL = dir.appendingPathComponent("MachineIdentifier")
-let machineIdentifierPath = machineIdentifierURL.path
 let vdaURL = dir.appendingPathComponent("vda.img")
 let vdbURL = dir.appendingPathComponent("vdb.img")
 let vdcURL = dir.appendingPathComponent("vdc.iso")
@@ -16,8 +14,8 @@ let macAddressURL = dir.appendingPathComponent(".virt.mac")
 
 let hasKernel = FileManager.default.fileExists(atPath: kernelURL.path)
 let hasInitialRamdisk = FileManager.default.fileExists(atPath: initialRamdiskURL.path)
-let hasEfiVariableStore = FileManager.default.fileExists(atPath: efiVariableStorePath)
-let hasMachineIdentifier = FileManager.default.fileExists(atPath: machineIdentifierPath)
+let hasEfiVariableStore = FileManager.default.fileExists(atPath: efiVariableStoreURL.path)
+let hasMachineIdentifier = FileManager.default.fileExists(atPath: machineIdentifierURL.path)
 let hasVdb = FileManager.default.fileExists(atPath: vdbURL.path)
 let hasVdc = FileManager.default.fileExists(atPath: vdcURL.path)
 
@@ -115,16 +113,16 @@ if hasKernel {
   bootLoader.commandLine = kernelCommandLineArguments.joined(separator: " ")
   configuration.bootLoader = bootLoader
 } else {
-  func createAndSaveMachineIdentifier() -> VZGenericMachineIdentifier {
-    let machineIdentifier = VZGenericMachineIdentifier()
-    // store the machine identifier to disk so you can retrieve it for subsequent boots.
-    try! machineIdentifier.dataRepresentation.write(to: URL(fileURLWithPath: machineIdentifierPath))
-    return machineIdentifier
-  }
-  func retrieveMachineIdentifier() -> VZGenericMachineIdentifier {
-    // retrieve the machine identifier.
+  let bootLoader = VZEFIBootLoader()
+  let platform = VZGenericPlatformConfiguration()
+
+  if hasEfiVariableStore && hasMachineIdentifier {
+    // the VM is booting from a disk image that already has the OS installed.
+    // retrieve the machine identifier and EFI variable store that were saved to
+    // disk during installation
+    // retrieve the machine identifier
     guard
-      let machineIdentifierData = try? Data(contentsOf: URL(fileURLWithPath: machineIdentifierPath))
+      let machineIdentifierData = try? Data(contentsOf: machineIdentifierURL)
     else {
       fatalError("Failed to retrieve the machine identifier data.")
     }
@@ -133,38 +131,24 @@ if hasKernel {
     else {
       fatalError("Failed to create the machine identifier.")
     }
-    return machineIdentifier
-  }
-  func createEFIVariableStore() -> VZEFIVariableStore {
+    platform.machineIdentifier = machineIdentifier
+    if !FileManager.default.fileExists(atPath: efiVariableStoreURL.path) {
+      fatalError("EFI variable store does not exist.")
+    }
+
+    bootLoader.variableStore = VZEFIVariableStore(url: efiVariableStoreURL)
+  } else {
+    // this is a fresh install: create a new machine identifier and EFI variable store
+    let machineIdentifier = VZGenericMachineIdentifier()
+    // store the machine identifier to disk so you can retrieve it for subsequent boots
+    try! machineIdentifier.dataRepresentation.write(to: machineIdentifierURL)
+    platform.machineIdentifier = machineIdentifier
     guard
-      let efiVariableStore = try? VZEFIVariableStore(
-        creatingVariableStoreAt: URL(fileURLWithPath: efiVariableStorePath))
+      let efiVariableStore = try? VZEFIVariableStore(creatingVariableStoreAt: efiVariableStoreURL)
     else {
       fatalError("Failed to create the EFI variable store.")
     }
-    return efiVariableStore
-  }
-  func retrieveEFIVariableStore() -> VZEFIVariableStore {
-    if !FileManager.default.fileExists(atPath: efiVariableStorePath) {
-      fatalError("EFI variable store does not exist.")
-    }
-    return VZEFIVariableStore(url: URL(fileURLWithPath: efiVariableStorePath))
-  }
-
-  let bootLoader = VZEFIBootLoader()
-  let platform = VZGenericPlatformConfiguration()
-
-  if hasEfiVariableStore && hasMachineIdentifier {
-    // the VM is booting from a disk image that already has the OS installed.
-    // retrieve the machine identifier and EFI variable store that were saved to
-    // disk during installation.
-    platform.machineIdentifier = retrieveMachineIdentifier()
-    bootLoader.variableStore = retrieveEFIVariableStore()
-  } else {
-    // this is a fresh install: Create a new machine identifier and EFI variable store,
-    // and configure a USB mass storage device to boot the ISO image.
-    platform.machineIdentifier = createAndSaveMachineIdentifier()
-    bootLoader.variableStore = createEFIVariableStore()
+    bootLoader.variableStore = efiVariableStore
   }
 
   configuration.bootLoader = bootLoader
