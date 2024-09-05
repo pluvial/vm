@@ -192,4 +192,7 @@ Clean disk images, downloads, and build artifacts
 
 [apinske/virt](https://github.com/apinske/virt)
 
-Apple sample code: [Running Linux in a Virtual Machine](https://developer.apple.com/documentation/virtualization/running_linux_in_a_virtual_machine)
+Apple sample code:
+
+- [Running Linux in a Virtual Machine](https://developer.apple.com/documentation/virtualization/running_linux_in_a_virtual_machine)
+- [Running GUI Linux in a virtual machine on a Mac](https://developer.apple.com/documentation/virtualization/running_gui_linux_in_a_virtual_machine_on_a_mac)
