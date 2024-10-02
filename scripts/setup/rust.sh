@@ -2,7 +2,7 @@
 
 set -ex
 
-# sudo apt-get install rustup
+# sudo apt-get -y install rustup
 # rustup default stable
 # echo 'export PATH="$HOME/.cargo/bin:$PATH"' >>~/.profile
 # echo 'fish_add_path -p $HOME/.cargo/bin' >>~/.config/fish/config.fish

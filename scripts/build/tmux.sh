@@ -7,7 +7,7 @@ cwd=$(pwd)
 cd ~/.local/src/tmux
 trap "cd $cwd" EXIT
 
-sudo apt-get install autoconf automake bison libevent-dev libncurses-dev pkgconf
+sudo apt-get -y install autoconf automake bison libevent-dev libncurses-dev pkgconf
 
 mkdir -p local
 prefix="$PWD/local"

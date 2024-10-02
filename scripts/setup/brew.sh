@@ -14,7 +14,7 @@ trap "cd $cwd" EXIT
 wget $url
 chmod +x $file
 
-sudo apt-get install ruby3.3
+sudo apt-get -y install ruby3.3
 ln -s $(which ruby3.3) ~/.local/bin/ruby
 
 # edit file to remove abort on arm64 linux

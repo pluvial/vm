@@ -2,7 +2,7 @@
 
 set -ex
 
-sudo apt-get install libpcre2-dev zlib1g-dev
+sudo apt-get -y install libpcre2-dev zlib1g-dev
 
 dir="openresty-1.25.3.2"
 file="$dir.tar.gz"

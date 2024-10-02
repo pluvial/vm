@@ -2,6 +2,8 @@
 
 set -ex
 
+sudo apt-get -y install unzip
+
 file="install"
 url="https://bun.sh/$file"
 

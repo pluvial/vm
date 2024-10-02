@@ -7,7 +7,7 @@ cwd=$(pwd)
 cd ~/.local/src/neovim
 trap "cd $cwd" EXIT
 
-sudo apt-get install build-essential cmake curl gettext ninja-build unzip
+sudo apt-get -y install build-essential cmake curl gettext ninja-build unzip
 
 mkdir -p local
 prefix="$PWD/local"

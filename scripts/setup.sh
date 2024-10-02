@@ -6,7 +6,8 @@ cwd=$(pwd)
 script=$(readlink -f "$0")
 dir=$(dirname "$script")
 
-sudo apt-get install build-essential fish git mosh neovim tmux
+sudo apt-get -y install build-essential fish git mosh neovim tmux
+sudo apt-get -y install btop gh hcloud-cli httpie jq psmisc
 
 cd $dir
 trap "cd $cwd" EXIT
@@ -26,5 +27,3 @@ setup/zig.sh
 # setup/docker.sh
 # setup/podman.sh
 # setup/tailscale.sh
-
-sudo apt install btop hcloud-cli httpie jq psmisc qemu-system

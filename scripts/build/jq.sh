@@ -7,7 +7,7 @@ cwd=$(pwd)
 cd ~/.local/src/jq
 trap "cd $cwd" EXIT
 
-sudo apt-get install libtool
+sudo apt-get -y install libtool
 
 mkdir -p local
 prefix="$PWD/local"

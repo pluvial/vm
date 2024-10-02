@@ -2,7 +2,7 @@
 
 set -ex
 
-sudo apt-get install golang
+sudo apt-get -y install golang
 echo 'export PATH="$PATH:$HOME/go/bin"' >>~/.profile
 echo 'fish_add_path $HOME/go/bin' >>~/.config/fish/config.fish
 

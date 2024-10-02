@@ -2,5 +2,5 @@
 
 set -ex
 
-sudo apt-get install podman
-sudo apt-get install passt netavark slirp4netns uidmap
+sudo apt-get -y install podman
+sudo apt-get -y install passt netavark slirp4netns uidmap

@@ -19,7 +19,7 @@ tar xf ~/.local/cache/$file
 cd $dir
 
 # make
-sudo apt-get install libreadline-dev
+sudo apt-get -y install libreadline-dev
 make linux-readline
 make test
 mkdir -p local

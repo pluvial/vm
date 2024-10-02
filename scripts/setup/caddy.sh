@@ -2,7 +2,7 @@
 
 set -ex
 
-# sudo apt-get install caddy
+# sudo apt-get -y install caddy
 
 cwd=$(pwd)
 

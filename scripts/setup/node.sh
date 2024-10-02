@@ -2,6 +2,6 @@
 
 set -ex
 
-sudo apt-get install nodejs node-corepack npm
+sudo apt-get -y install nodejs node-corepack npm
 
-corepack enable pnpm
+sudo corepack enable pnpm
