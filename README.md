@@ -2,6 +2,14 @@
 
 Linux VMs on ARM64
 
+## Getting `vm`
+
+```sh
+mkdir vm && curl -L https://github.com/pluvial/vm/archive/main.tar.gz | tar xzf - --strip-components=1
+mkdir vm && wget https://github.com/pluvial/vm/archive/main.tar.gz -O - | tar xzf - --strip-components=1
+git clone --depth=1 https://github.com/pluvial/vm
+```
+
 ## Building `vm` binary
 
 ```sh
