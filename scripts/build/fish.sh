@@ -4,6 +4,8 @@ set -ex
 
 cwd=$(pwd)
 
+sudo apt-get -y install cmake
+
 cd ~/.local/src/fish-shell
 trap "cd $cwd" EXIT
 
