@@ -21,9 +21,11 @@ setup/bun.sh
 setup/deno.sh
 setup/zig.sh
 
+setup/caddy.sh
+setup/cloudflared.sh
+setup/docker.sh
+setup/podman.sh
+setup/tailscale.sh
+
 # setup/brew.sh
-# setup/caddy.sh
 # setup/code-server.sh
-# setup/docker.sh
-# setup/podman.sh
-# setup/tailscale.sh
