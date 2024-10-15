@@ -14,6 +14,7 @@ trap "cd $cwd" EXIT
 
 setup/cache.sh
 setup/mise.sh
+setup/python.sh
 setup/ruby.sh
 
 setup/caddy.sh
