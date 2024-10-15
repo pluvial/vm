@@ -13,19 +13,21 @@ cd $dir
 trap "cd $cwd" EXIT
 
 setup/cache.sh
-setup/go.sh
-setup/node.sh
-setup/rust.sh
-
-setup/bun.sh
-setup/deno.sh
-setup/zig.sh
+setup/mise.sh
 
 setup/caddy.sh
 setup/cloudflared.sh
+setup/code-cli.sh
 setup/docker.sh
 setup/podman.sh
 setup/tailscale.sh
+
+# setup/bun.sh
+# setup/deno.sh
+# setup/go.sh
+# setup/node.sh
+# setup/rust.sh
+# setup/zig.sh
 
 # setup/brew.sh
 # setup/code-server.sh
