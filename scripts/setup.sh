@@ -33,3 +33,4 @@ setup/tailscale.sh
 
 # setup/brew.sh
 # setup/code-server.sh
+# setup/zed.sh
