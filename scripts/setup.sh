@@ -26,6 +26,7 @@ setup/tailscale.sh
 
 # setup/bun.sh
 # setup/deno.sh
+# setup/elixir.sh
 # setup/go.sh
 # setup/node.sh
 # setup/rust.sh
