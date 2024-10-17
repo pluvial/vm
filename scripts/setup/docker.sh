@@ -31,6 +31,6 @@ sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-buildx-plug
 #
 # ./$file
 
-sudo apt-get -y install slirp4netns uidmap
-# sudo apt-get -y install uidmap vpnkit
+sudo apt-get -y install docker-ce-rootless-extras slirp4netns uidmap
+# sudo apt-get -y install docker-ce-rootless-extras uidmap vpnkit
 dockerd-rootless-setuptool.sh install
