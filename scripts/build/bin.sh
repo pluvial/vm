@@ -13,8 +13,12 @@ symlink() {
 }
 
 symlink jq jq
-symlink lua-5.4.7 lua
-symlink luajit luajit
 symlink fish-shell fish
+symlink mosh mosh
 symlink neovim nvim
 symlink tmux tmux
+
+# symlink lua-5.4.7 lua
+# symlink luajit luajit
+# symlink nginx nginx
+# symlink openresty resty

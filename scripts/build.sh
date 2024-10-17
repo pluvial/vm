@@ -14,13 +14,15 @@ build/src.sh
 
 build/fish.sh
 build/jq.sh
-build/janet.sh
-build/lua.sh
-build/luajit.sh
-build/nginx.sh
+build/mosh.sh
 build/nvim.sh
-build/openresty.sh
 build/tmux.sh
-build/zig.sh
+
+# build/janet.sh
+# build/lua.sh
+# build/luajit.sh
+# build/nginx.sh
+# build/openresty.sh
+# build/zig.sh
 
 build/bin.sh

@@ -13,12 +13,13 @@ clone() {
 }
 
 clone fish-shell fish-shell
-clone janet-lang janet
 clone jqlang jq
+clone mobile-shell mosh
 clone neovim neovim
 clone nginx nginx
 clone tmux tmux
-clone ziglang zig
-clone ziglang zig-bootstrap
 
-git clone https://luajit.org/git/luajit.git
+# clone janet-lang janet
+# clone ziglang zig
+# clone ziglang zig-bootstrap
+# git clone https://luajit.org/git/luajit.git
