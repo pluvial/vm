@@ -8,7 +8,7 @@ mkdir -p ~/.local/cache/forgejo
 cd ~/.local/cache/forgejo
 trap "cd $cwd" EXIT
 
-version="8.0.3"
+version="9.0.0"
 name="forgejo-$version-linux-arm64"
 file="$name.xz"
 
