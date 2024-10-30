@@ -1,0 +1,18 @@
+[
+  {
+    "direction": "in",
+    "source_ips": ["100.64.0.0/10"],
+    "destination_ips": [],
+    "protocol": "tcp",
+    "port": "any",
+    "description": "tcp"
+  },
+  {
+    "direction": "in",
+    "source_ips": ["100.64.0.0/10"],
+    "destination_ips": [],
+    "protocol": "udp",
+    "port": "any",
+    "description": "udp"
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "direction": "in",
+    "source_ips": ["0.0.0.0/0", "::/0"],
+    "destination_ips": [],
+    "protocol": "icmp",
+    "port": null,
+    "description": "ping"
+  }
+]
