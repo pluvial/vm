@@ -2,8 +2,9 @@
 
 set -ex
 
+arch=$(uname -m | sed -e 's/aarch64/arm64/' -e 's/x86_64/x64/')
 file="vscode_cli.tar.gz"
-url="https://code.visualstudio.com/sha/download?build=stable&os=cli-alpine-arm64"
+url="https://code.visualstudio.com/sha/download?build=stable&os=cli-alpine-$arch"
 
 cwd=$(pwd)
 

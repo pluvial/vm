@@ -10,11 +10,12 @@ trap "cd $cwd" EXIT
 
 wget https://ziglang.org/download/index.json
 
+arch=$(uname -m)
 # version="0.13.0"
 version=$(cat index.json | jq -r .master.version)
-# tarball=$(cat index.json | jq -r '.master.["aarch64-linux"].tarball')
+# tarball=$(cat index.json | jq -r '.master.["$arch-linux"].tarball')
 
-name="zig-linux-aarch64-$version"
+name="zig-linux-$arch-$version"
 file="$name.tar.xz"
 
 # url="https://ziglang.org/download/$version/$file"

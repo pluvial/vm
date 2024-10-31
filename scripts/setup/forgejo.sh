@@ -8,8 +8,9 @@ mkdir -p ~/.local/cache/forgejo
 cd ~/.local/cache/forgejo
 trap "cd $cwd" EXIT
 
+arch=$(uname -m | sed -e 's/aarch64/arm64/' -e 's/x86_64/amd64/')
 version="9.0.0"
-name="forgejo-$version-linux-arm64"
+name="forgejo-$version-linux-$arch"
 file="$name.xz"
 
 url="https://codeberg.org/forgejo/forgejo/releases/download/v$version/$file"
