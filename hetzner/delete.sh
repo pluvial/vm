@@ -7,17 +7,18 @@ script=$(readlink -f "$0")
 dir=$(dirname "$script")
 
 project=$PROJECT
-key_file=id_root-$project
-key_name=root@$project
-key_path=$dir/id/$key_file
+key_dir="~/.ssh/id"
+key_file="root-$project"
+key_name="root@$project"
+key_path="$key_dir/$key_file"
 server=$project
 
 hcloud context use $project
 
-firewalls/delete.sh
-
 hcloud server disable-protection $server delete rebuild
 hcloud server delete $server
 
+firewalls/delete.sh
+
 hcloud ssh-key delete $key_name
-# rm $key_path
+echo "local key path: $key_path"
