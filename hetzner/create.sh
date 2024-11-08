@@ -6,12 +6,13 @@ cwd=$(pwd)
 script=$(readlink -f "$0")
 dir=$(dirname "$script")
 
-project=$PROJECT
+project=${PROJECT:-dev}
+server=${SERVER:-$project}
+type=${TYPE:-cax11}
 key_dir=~/.ssh/id
 key_file="root-$project"
 key_name="root@$project"
 key_path="$key_dir/$key_file"
-server=$project
 
 # hcloud context create $project
 hcloud context use $project
@@ -31,7 +32,7 @@ hcloud server create \
   --location nbg1 \
   --name $server \
   --ssh-key $key_name \
-  --type cax11 \
+  --type $type \
   -o json >$dir/$server.json
 
 ipv4=$(hcloud server ip $server)
